@@ -1,0 +1,24 @@
+{
+  "name": "todolist",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/calebcaswelllevy/todolist.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/calebcaswelllevy/todolist/issues"
+  },
+  "homepage": "https://github.com/calebcaswelllevy/todolist#readme",
+  "devDependencies": {
+    "@types/jquery": "^3.5.5",
+    "webpack": "^5.11.1",
+    "webpack-cli": "^4.3.1"
+  }
+}
