@@ -1,8 +1,35 @@
 <!DOCTYPE html>
 <head>
-
+    <link rel="stylesheet" href="styles.css">
+   <script> //Global drag event handlers:
+    function allowDrop(ev) {
+        ev.preventDefault();
+      }
+      
+      function drag(ev) {
+        ev.dataTransfer.setData("text", ev.target.id);
+      }
+      
+      function drop(ev) {
+        ev.preventDefault();
+        console.log(ev)
+        //var data = ev.target.id;
+        ev.target.appendChild(document.getElementById(data));
+      }</script>
 </head>
 
-<body id="body">
+<body id="body" class="container">
+    <header id="header" class="container"></header>
+    <div id="side-nav" class="container">
+    </div>
+    <div id="main-display" class="container">
+        <div id="active-list">
 
+        </div>
+        <div id="bottom-menu" class="container">
+            <button id="add" class="btn btn-primary">+</button>
+        </div>
+    </div>
+    
+    <script src="main.js"></script>
 </body>

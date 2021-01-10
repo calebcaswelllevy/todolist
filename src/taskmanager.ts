@@ -29,7 +29,7 @@ export const TaskManager = (() => {
 
         for (let i = 0; i < chores.length; i++){
             //if its due today, add it to the list:
-            if (this.due(chores[i], today)) {
+            if (due(chores[i], today)) {
                 choresDueToday.push(chores[i]);
             }
         }
@@ -70,16 +70,52 @@ export const TaskManager = (() => {
          }
          return finishedChores;
      }
-    }
-    //Remove completed tasks from list
-    const removeCompleted = () => {
+    
 
+    //Remove completed tasks from list
+    const removeCompleted = (list:List, chore:Chore) => {
+        if (chore.getStatus()){
+            list.deleteChore(chore);
+        } 
     }
+    const isToday = (someDate:Date) => {
+        const today = new Date()
+        return someDate.getDate() == today.getDate() &&
+          someDate.getMonth() == today.getMonth() &&
+          someDate.getFullYear() == today.getFullYear()
+      }
+      const isTomorrow = (someDate:Date) => {
+        const today = new Date()
+        return someDate.getDate() == (today.getDate() + 1) &&
+          someDate.getMonth() == today.getMonth() &&
+          someDate.getFullYear() == today.getFullYear()
+      }
     return {
         getChoresDueToday,
         getUnfinishedChores,
         getFinishedChores,
         removeCompleted,
+        isToday,
+        isTomorrow,
     }
+})();
+
+export const notebook = (()=>{
+    const lists = [];
+    const addList = (list) => {
+        lists.push(list);
+    }
+    
+    const removeList = (list) => {
+        lists.splice(list.indexOf(list),1);
+    }
+    const getLists = () => {
+        return lists.slice();
+    }
+    let owner = "Caleb"
+    return {addList,
+           removeList,
+            getLists,
+            owner }
 })();
 
