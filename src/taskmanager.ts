@@ -101,16 +101,35 @@ export const TaskManager = (() => {
 })();
 
 export const notebook = (()=>{
-    const lists = [];
+   /* if(localStorage.getItem("lists")){
+        //parse string to arr of lists
+        let listarr:string[] = localStorage.getItem("lists");
+        listarr.forEach(list => {
+            let newList = JSON.parse(list)
+        })
+    } else { */
+        //initialize lists
+        const lists = [];
+   // }
+       
+    
     const addList = (list) => {
         lists.push(list);
+        localStorage.setItem("lists", lists.toString());
+        
     }
     
-    const removeList = (list) => {
-        lists.splice(list.indexOf(list),1);
+    const removeList = (title) => {
+        lists.forEach((list, index) => {
+            if (list.getTitle() == title){
+                lists.splice(index,1);
+            }
+        })
+        ;
+        localStorage.setItem("lists", lists)
     }
     const getLists = () => {
-        return lists.slice();
+        return lists;
     }
     let owner = "Caleb"
     return {addList,

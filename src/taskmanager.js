@@ -86,15 +86,30 @@ exports.TaskManager = (function () {
     };
 })();
 exports.notebook = (function () {
+    /* if(localStorage.getItem("lists")){
+         //parse string to arr of lists
+         let listarr:string[] = localStorage.getItem("lists");
+         listarr.forEach(list => {
+             let newList = JSON.parse(list)
+         })
+     } else { */
+    //initialize lists
     var lists = [];
+    // }
     var addList = function (list) {
         lists.push(list);
+        localStorage.setItem("lists", lists.toString());
     };
-    var removeList = function (list) {
-        lists.splice(list.indexOf(list), 1);
+    var removeList = function (title) {
+        lists.forEach(function (list, index) {
+            if (list.getTitle() == title) {
+                lists.splice(index, 1);
+            }
+        });
+        localStorage.setItem("lists", lists);
     };
     var getLists = function () {
-        return lists.slice();
+        return lists;
     };
     var owner = "Caleb";
     return { addList: addList,

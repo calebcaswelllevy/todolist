@@ -4,12 +4,12 @@ export class List {
     private chores:Chore[];
     private theme:string;
     private title:string;
-    private self;
-    constructor(chores:Chore[] = [], theme:string, title:string) {
+    
+    constructor(title:string, theme:string = "", chores:Chore[] = [],) {
         this.chores = chores;
         this.theme = theme;
         this.title = title;
-        self = this;
+        this;
     }
 
     //Setters:

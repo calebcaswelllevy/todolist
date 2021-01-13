@@ -2,12 +2,13 @@
 exports.__esModule = true;
 exports.List = void 0;
 var List = /** @class */ (function () {
-    function List(chores, theme, title) {
+    function List(title, theme, chores) {
+        if (theme === void 0) { theme = ""; }
         if (chores === void 0) { chores = []; }
         this.chores = chores;
         this.theme = theme;
         this.title = title;
-        self = this;
+        this;
     }
     //Setters:
     List.prototype.setChores = function (chores) {

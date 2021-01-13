@@ -1,35 +1,30 @@
 <!DOCTYPE html>
 <head>
     <link rel="stylesheet" href="styles.css">
-   <script> //Global drag event handlers:
-    function allowDrop(ev) {
-        ev.preventDefault();
-      }
-      
-      function drag(ev) {
-        ev.dataTransfer.setData("text", ev.target.id);
-      }
-      
-      function drop(ev) {
-        ev.preventDefault();
-        console.log(ev)
-        //var data = ev.target.id;
-        ev.target.appendChild(document.getElementById(data));
-      }</script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+        </style>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Fraunces&family=Ovo&display=swap');
+            </style>
 </head>
 
 <body id="body" class="container">
-    <header id="header" class="container"></header>
-    <div id="side-nav" class="container">
-    </div>
+    <div id="header" class="container">This is the header Div</div>
+    <ul id="side-nav" class="container">
+        <h2 id="side-nav-title">Lists:</h2>
+      
+    </ul>
     <div id="main-display" class="container">
-        <div id="active-list">
+        <div id="active-list" class="container list-holder" >
 
         </div>
         <div id="bottom-menu" class="container">
+            <button id="list-manager" class="btn">Lists</button>
             <button id="add" class="btn btn-primary">+</button>
         </div>
     </div>
+  
     
     <script src="main.js"></script>
 </body>
