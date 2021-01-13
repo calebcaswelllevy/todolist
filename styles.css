@@ -1,0 +1,294 @@
+
+
+.container {
+    display:grid;
+}
+
+#active-list {
+    grid-template-rows: auto auto auto;
+}
+
+body {
+    font-family: 'Fraunces', sans-serif;
+    font-family: 'Ovo', sans-serif;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 100px 1fr 1fr 1fr 1fr;
+    color: #1f1f1f;
+    background-color: #f8eee7
+}
+h1 {
+    text-align: center;
+    align-self: center;
+}
+.btn {
+    outline: none;
+}
+#side-nav {
+    grid-row: 2/6;
+    grid-column: 1/2;
+    margin-right: 20px;
+    justify-content: center;
+    align-items: top;
+    list-style-type: disc;
+    display:inline-block;
+    height:10px;
+}
+#side-nav h2 {
+    border-bottom-style:double;
+    text-align: center;
+}
+#side-nav li {
+    margin-top:20px;
+    padding: 10px;
+    list-style-type: kannada;
+    list-style-position:initial;
+    cursor: pointer;
+}
+
+#header {
+    grid-column: 1/6;
+    grid-row: 1/2;
+    background-color:#f4decb;
+    height:100px;
+  
+}
+#main-display {
+    grid-column: 2/5;
+    grid-row: 2/5;
+    background-color: #f8eee7;
+    color: #1f1f1f;
+}
+.day-name {
+    font-weight: bold;
+    background-color: #f4decb;
+    color: #1f1f1f;
+    text-align: center;
+}
+.day {
+   padding:20px;
+   margin:0px;
+    justify-content: center;
+}
+.chore {
+    display: container;
+    grid-template-columns: 1fr 5fr;
+    grid-template-rows:auto;
+    padding: 10px;
+    border-bottom: 2px groove;
+    border-color:#94618E;
+}
+
+input[type=checkbox] {
+    grid-column: 1/2;
+    grid-row: 1/2;
+    position: relative;
+      cursor: pointer;
+      border-radius:20%;
+      
+}
+input[type=checkbox]:before {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: -3px;
+    left: 0;
+    background-color:#D2BACF;
+    border-radius:20%;
+}
+input[type=checkbox]:after {
+  
+}
+input[type=checkbox]:checked:before {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: -3px;
+    left: 0;
+    background-color:#49274a;
+    
+}
+input[type=checkbox]:checked:after {
+    content: "";
+    display: block;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    position: absolute;
+    top: -1px;
+    left: 6px;
+   
+}
+
+.description {
+    grid-column: 2/3;
+    grid-row: 1/2;
+    
+}
+
+/*format bottom buttons*/
+#bottom-menu {
+    display: grid;
+    grid-template-columns: 20px 4fr 20px 1fr;
+}
+#add {  
+    width: 70px;
+    justify-self: end;
+    border-radius: 50%;
+    height: 70px;
+    background-color:#94618E;
+    font-size:3rem;
+    color: white;
+    box-shadow: 1px 2px 5px #49274A;
+    border: none;
+    grid-column: 4/5;
+    cursor:pointer;
+}
+
+#list-manager {
+    background-color: #F0E8EF;
+    border:none;
+    box-shadow: 1px 1px 3px #f4decb;
+    grid-column:2/3;
+    font-family: 'Fraunces', sans-serif;
+    font-size: 1.5rem;
+    border-radius: 10%;
+    cursor:pointer;
+    height: 70px;
+}
+/*Format chore form*/
+    #new-chore-form {
+        display:grid;
+        justify-content: stretch;
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-columns: 1fr;
+        align-items:center;
+    }
+    label {
+        text-align: center;
+        
+    }
+    input {
+        outline:none;
+        border-color: #f4decb;
+        border-width: 3px;
+        border-style:solid;
+        border-radius: 5%;
+        height:100%;
+    }
+    #description {
+        font-family: "Open Sans", sans-serif;
+        font-size:1.2rem;
+        text-align:center;
+        grid-row: 2/3;
+        background-color:#f6f6f6;
+    }
+    #description:hover {
+        background-color:white;
+    }
+    #priority {
+       
+        grid-row:4/5;
+       border-radius: 10%;
+        -webkit-appearance: none;  /* Override default CSS styles */
+        appearance: none;
+        width: 100%; /* Full-width */            height: 25px; /* Specified height */
+        background: #94618E; /* rey background */
+        outline: none; /* Remove outline */            opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+        -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+        transition: opacity .2s;
+    }
+    #priority:hover {
+        opacity: 1; /* Fully shown on mouse-over */
+      }
+    #priority::-webkit-slider-thumb {
+        -webkit-appearance: none; /* Override default look */
+        appearance: none;
+        width: 25px; /* Set a specific slider handle width */
+        height: 25px; /* Slider handle height */
+        background: #49274A; /* Green background */
+        cursor: pointer; /* Cursor on hover */
+      }
+    #date {
+       grid-row: 6/7;
+       background-color:#f6f6f6;
+       text-align: center;
+    }
+    #date:hover {
+        background-color: white;
+    }
+    #add-chore {
+        width:40%;
+        outline:none;
+        justify-self: right;
+        margin: 10px;
+        margin-bottom:20px;
+        padding:10px;
+        background-color: #94618E;
+        font-size: 1rem;
+        text-transform: uppercase;
+        color: white;
+        border-radius:5%;
+
+    }
+
+    /*Style the list form page*/
+    #new-list-form {
+        margin:30px;
+        margin-bottom:50px;
+        display:grid;
+        grid-template-columns: 6fr 1fr;
+        grid-gap: 30px;
+    }
+    #new-form {
+        width:100%;
+        height: 50px;
+        text-align:center;
+        font-family: "Open Sans", sans-serif;
+        text-transform:capitalize;
+        background-color:#f6f6f6;
+    }
+    #new-form:hover {
+        background-color: white;
+    }
+    #new-form-submit {
+        justify-self: center;
+        width: 100%;
+        margin-left: 10px;
+        background-color: #f4decb;
+        cursor:pointer;
+        color:black;
+        font-family:"Open Sans", sans-serif;
+        font-weight:bolder;
+        font-size:1.01rem;
+    }
+    /*List button steez*/
+    .nav-bar-list-element {
+        box-shadow: 1px 1px 7px#f4decb;
+        width: 95%;
+        height:auto;
+        display:grid;
+
+    }
+    .list-btn {
+        background:#f4decb;
+        border-color:#94618E;
+        border-width: 2px;
+        border-radius: 10%;
+        padding:10px;
+        margin: 10px;
+        outline-style: none;
+        font-weight:bolder;
+    }
+    .delete-list {
+        color: maroon;
+        
+        background-color:lightcoral;
+    }
