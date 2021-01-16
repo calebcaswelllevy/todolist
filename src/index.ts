@@ -36,8 +36,7 @@ export const domManager = (()=>{
 
     const addClickHandler = (element:string, chore:Chore) => {
         $(element).on("click", () => {
-           //TODO: make this remove this chore from the DOM
-                    //make it remove from the list also
+           
             if (chore.getStatus() === false) {
                 chore.setStatus(true);
                 $(element).parent().css("text-decoration","line-through")
@@ -51,7 +50,9 @@ export const domManager = (()=>{
   
     //function to render active list
     const renderList = (list:List, location:string) => {
+        
         let sortedList = list.getSortedChores();
+       
         let days = ["Today", "Tomorrow", "Later"]
         for (let i = 0; i<days.length; i++){
             $(`#${location}`).append(`<div id='${days[i]}' class="day"><h2 class="day-name">${days[i]}<h2></div>`)
@@ -60,6 +61,7 @@ export const domManager = (()=>{
             
         for (let i = 0; i<sortedList.length; i++){
             let today = TaskManager.isToday(sortedList[i].getDueDate())
+           
             let tomorrow = TaskManager.isTomorrow(sortedList[i].getDueDate())
             switch (true) {
                 case today://Today's Date
@@ -83,15 +85,15 @@ export const domManager = (()=>{
         let todaysDate:Date = new Date();
         let tomorrowsDate:Date = new Date();
         tomorrowsDate.setDate(todaysDate.getDate()+1);
-        let list1 = new List("Test List");
-        let chore1 = new Chore("c1",false,5,todaysDate,"Something to do");
-        let chore2 = new Chore("c2",false,2, todaysDate,"Something to do");
-        let chore3 = new Chore("another", true, 1, tomorrowsDate, "Thing to do")
+        let list1 = new List("Test List", true);
+        let chore1 = new Chore("c1","a ting tp do", false,5,todaysDate);
+        let chore2 = new Chore("c2","more fun", false,2, todaysDate);
+        let chore3 = new Chore("another", "even more",  true, 1, tomorrowsDate)
         notebook.addList(list1);
         list1.addChore(chore1);
         list1.addChore(chore2);
         list1.addChore(chore3);
-        notebook.addList(new List("Stuff Madison wants me to do"))
+        notebook.addList(new List("Stuff Madison wants me to do", false))
         }
         $(`#main-display`).html(`
             <div id="active-list" class="container list-holder" >
@@ -101,10 +103,12 @@ export const domManager = (()=>{
                 <button id="list-manager" class="btn">Lists</button>
                 <button id="add" class="btn btn-primary">+</button>
             </div>`)
-        domManager.renderList(notebook.getLists()[0], "active-list");
+        let active:List = notebook.getActiveList();
+        
+        domManager.renderList(active, "active-list");
         domManager.renderSideBar();
         domManager.handleNewList();
-        domManager.addListClick();
+       
         $('#list-manager').on('click', domManager.renderListPage);
         }
 
@@ -128,10 +132,16 @@ export const domManager = (()=>{
         let lists = notebook.getLists();
         let n = lists.length;
         for (let i = 0; i<n; i++) {
-            let {title} = lists[i]
+            let title = lists[i].getTitle().split(' ').join('-');
             $('#side-nav').append(`<li id="${title}" class="nav-bar-list-element">${lists[i].getTitle()}</li>`);
         }
         addListButtons();
+        addListClick();
+        let list:List = notebook.getActiveList();
+        let title = list.getTitle().split(' ').join('-');
+        let activeList = document.getElementById(title)
+        
+        formatActive(activeList);
     }
     
 
@@ -151,16 +161,21 @@ export const domManager = (()=>{
                 let clicked;
                 
                 for (let i = 0; i< lists.length; i++) {
-                    let {title} = lists[i];
-        
-                    if (title === list.textContent) {
+                    let title = lists[i].getTitle();
+                    let text = $(list)
+                        .clone() //clone parent node
+                        .children()//select children
+                        .remove()//remove children
+                        .end()//go back to parent
+                        .text();//retrive text
+                    if (title === text) {
                         clicked = lists[i];
                         break;
                     }
                 }
-    
-                domManager.clearList()
-                domManager.renderList(clicked, 'active-list')
+               
+                domManager.clearList();
+                domManager.renderList(clicked, 'active-list');
                 
                 //remove formatting form other li:
                 domManager.formatInactive();
@@ -190,7 +205,7 @@ export const domManager = (()=>{
     }
     //make inactive lists base formatting:
     const formatInactive = () => {
-        console.log("runnig")
+
         $('#side-nav').children('li').css('list-style-type', 'kannada')
             .css("box-shadow", "")
             .css("font-size", "")
@@ -206,7 +221,7 @@ export const domManager = (()=>{
         <h2 class="day-name">Add a List</h2>
             <form id="new-list-form" autocomplete="off">
                 <input id="new-form" type="text" placeholder="Enter a List Name">
-                <input id="new-form-submit" type = "button" class="btn" value="Create List">
+                <input id="new-form-submit" for="new-form" type = "button" class="btn" value="Create List">
             </form>
          <div id="bottom-menu" class="container">
               <button id="list-manager" class="btn bottom-main-button">Chores</button>
@@ -251,18 +266,22 @@ export const domManager = (()=>{
         </div>
         `)
         renderSideBar();
-        addListClick();
+        
         $('#list-manager').on('click', domManager.renderChorePage);
         addChore();
     }
     //function to create new list from buttons
     const handleAddList = () => {
-        let title:string = $('input').val().toString();
+       
+        //let title = document.getElementById('new-form').value;
         const addList = () => {
+            let title:string = $('input:text').val()
             let newList = new List(title);
             notebook.addList(newList);
+            console.log('The new list is ', notebook.getLists())
             renderListPage();
-            addListButtons()
+            renderSideBar();
+            
 
         }
         $('#new-form-submit').on('click', addList)
@@ -285,7 +304,7 @@ export const domManager = (()=>{
             .text();//retrive text
         notebook.removeList(title);
         renderSideBar();
-        addListButtons();
+        
 
         }
         $('.delete-list').on('click', deleteList)
@@ -301,7 +320,7 @@ export const domManager = (()=>{
                 .text();//retrive text
             let lists = notebook.getLists();
             let [list]:List[] = lists.filter((item:List) => item.getTitle() == title); 
-            console.log(list); 
+        
             list.getChores().forEach((chore) => {
                if (chore.getStatus() === true){
                    list.deleteChore(chore);
@@ -310,36 +329,36 @@ export const domManager = (()=>{
             
            
             renderSideBar();
-            addListButtons();
+            //if its on list page, redraw lists:
+       
+            if ($('#active-list').children("#days") !== undefined) {
+                console.log()
+                clearList();
+                renderChorePage();
+            }
             
         }
         $('.clean-list').on('click', makeTidy);
     }
 
     //Add event listener to Add Chore Button
-    const addChore = () => {
-        let description:string = $('input').val().toString();
-        let name:string = description.split(' ').join("-");
+   const addChore = () => {
         const handleAddChore = () => {
-            let newChore = new Chore(name = name, desc=description);
+            let description:string = $('#description').val().toString();
+            let name:string = description.split(' ').join("-");
+            let priority:number = parseInt($('#priority').val());
+            let dueDate:Date = new Date($('#date').val());
+            let newChore:Chore = new Chore(name, description, false, priority, dueDate);
+            notebook.getActiveList().addChore(newChore);
+        
+            
+
         }
         $('#add-chore').on('click', handleAddChore);
     }
 
-    ////
-    const handleAddList = () => {
-        let title:string = $('input').val().toString();
-        const addList = () => {
-            let newList = new List(title);
-            notebook.addList(newList);
-            renderListPage();
-            addListButtons()
 
-        }
-        $('#new-form-submit').on('click', addList)
-    }
 
-    ////
     return {
         renderChorePage,
         renderAddChorePage,

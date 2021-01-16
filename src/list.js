@@ -2,11 +2,10 @@
 exports.__esModule = true;
 exports.List = void 0;
 var List = /** @class */ (function () {
-    function List(title, theme, chores) {
-        if (theme === void 0) { theme = ""; }
+    function List(title, status, chores) {
         if (chores === void 0) { chores = []; }
         this.chores = chores;
-        this.theme = theme;
+        this.status = status;
         this.title = title;
         this;
     }
@@ -14,8 +13,8 @@ var List = /** @class */ (function () {
     List.prototype.setChores = function (chores) {
         this.chores = chores;
     };
-    List.prototype.setTheme = function (theme) {
-        this.theme = theme;
+    List.prototype.setStatus = function (status) {
+        this.status = status;
     };
     List.prototype.setTitle = function (title) {
         this.title = title;
@@ -24,16 +23,14 @@ var List = /** @class */ (function () {
     List.prototype.getChores = function () {
         return this.chores.slice();
     };
-    List.prototype.getTheme = function () {
-        return this.theme;
+    List.prototype.getStatus = function () {
+        return this.status;
     };
     List.prototype.getTitle = function () {
         return this.title;
     };
     //Other methods:
     List.prototype.addChore = function (chore) {
-        console.log("this should be list");
-        console.log('this is: ', this);
         this.chores.push(chore);
     };
     List.prototype.deleteChore = function (chore) {

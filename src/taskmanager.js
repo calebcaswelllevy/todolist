@@ -106,14 +106,24 @@ exports.notebook = (function () {
                 lists.splice(index, 1);
             }
         });
-        localStorage.setItem("lists", lists);
+        //localStorage.setItem("lists", lists)
     };
     var getLists = function () {
         return lists;
+    };
+    var getActiveList = function () {
+        var listA;
+        lists.forEach(function (list) {
+            if (list.getStatus() === true) {
+                listA = list;
+            }
+        });
+        return listA;
     };
     var owner = "Caleb";
     return { addList: addList,
         removeList: removeList,
         getLists: getLists,
+        getActiveList: getActiveList,
         owner: owner };
 })();

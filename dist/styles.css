@@ -20,8 +20,9 @@ h1 {
     text-align: center;
     align-self: center;
 }
-.btn {
+button {
     outline: none;
+    cursor: pointer;
 }
 #side-nav {
     grid-row: 2/6;
@@ -42,8 +43,9 @@ h1 {
     padding: 10px;
     list-style-type: kannada;
     list-style-position:initial;
-    cursor: pointer;
 }
+
+
 
 #header {
     grid-column: 1/6;
@@ -287,8 +289,13 @@ input[type=checkbox]:checked:after {
         outline-style: none;
         font-weight:bolder;
     }
+    .list-btn:hover{
+        background:#f7d5b8
+    }
     .delete-list {
         color: maroon;
-        
         background-color:lightcoral;
+    }
+    .delete-list:hover {
+        background-color:rgb(240, 154, 154);
     }

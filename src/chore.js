@@ -2,7 +2,7 @@
 exports.__esModule = true;
 exports.Chore = void 0;
 var Chore = /** @class */ (function () {
-    function Chore(name, status, priority, date, desc) {
+    function Chore(name, desc, status, priority, date) {
         if (status === void 0) { status = false; }
         if (priority === void 0) { priority = 0; }
         if (date === void 0) { date = null; }

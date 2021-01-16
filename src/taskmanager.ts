@@ -109,7 +109,7 @@ export const notebook = (()=>{
         })
     } else { */
         //initialize lists
-        const lists = [];
+        const lists: List[] = [];
    // }
        
     
@@ -126,15 +126,28 @@ export const notebook = (()=>{
             }
         })
         ;
-        localStorage.setItem("lists", lists)
+        //localStorage.setItem("lists", lists)
     }
     const getLists = () => {
         return lists;
+    }
+    const getActiveList = () => {
+      
+        let listA:List; 
+        lists.forEach(list => {
+           
+            if (list.getStatus() === true) {
+                
+                listA = list;
+            }
+        })
+        return listA;
     }
     let owner = "Caleb"
     return {addList,
            removeList,
             getLists,
+            getActiveList,
             owner }
 })();
 

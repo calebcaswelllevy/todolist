@@ -4,10 +4,11 @@ export class List {
     private chores:Chore[];
     private theme:string;
     private title:string;
-    
-    constructor(title:string, theme:string = "", chores:Chore[] = [],) {
+    private status:boolean
+
+    constructor(title:string, status:boolean, chores:Chore[] = [],) {
         this.chores = chores;
-        this.theme = theme;
+        this.status = status;
         this.title = title;
         this;
     }
@@ -16,8 +17,8 @@ export class List {
     setChores(chores:Chore[]){
         this.chores = chores
     }
-    setTheme(theme:string){
-       this.theme = theme;
+    setStatus(status:boolean){
+       this.status = status;
     }
     setTitle(title:string){
         this.title = title;
@@ -27,8 +28,9 @@ export class List {
     getChores(){
         return this.chores.slice();
     }
-    getTheme(){
-        return this.theme;
+    getStatus(){
+       
+        return this.status;
     }
     getTitle(){
         return this.title;
@@ -36,8 +38,7 @@ export class List {
 
     //Other methods:
     addChore(chore:Chore){
-        console.log("this should be list")
-        console.log('this is: ', this)
+  
         this.chores.push(chore);
     }
     

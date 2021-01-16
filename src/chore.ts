@@ -1,12 +1,12 @@
 export class Chore {
     private name:string;
-    private status:boolean;
+    private status:Boolean;
     private priority:number;
     private dueDate:Date;
     private description:string;
     
-    constructor (name:string, status:boolean = false, priority:number = 0,
-                    date:Date = null, desc:string){
+    constructor (name:string, desc:string, status:Boolean = false, priority:number = 0,
+                    date:Date = null){
         this.name = name;
         this.status = status;
         this.priority = priority;
