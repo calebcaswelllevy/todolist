@@ -7,7 +7,6 @@ var List = /** @class */ (function () {
         this.chores = chores;
         this.status = status;
         this.title = title;
-        this;
     }
     //Setters:
     List.prototype.setChores = function (chores) {

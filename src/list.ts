@@ -2,42 +2,41 @@ import { Chore } from './chore'
 
 export class List {
     private chores:Chore[];
-    private theme:string;
     private title:string;
     private status:boolean
 
-    constructor(title:string, status:boolean, chores:Chore[] = [],) {
+    constructor(title:string, status:boolean, chores:Chore[] = []) {
         this.chores = chores;
         this.status = status;
         this.title = title;
-        this;
+       
     }
 
     //Setters:
-    setChores(chores:Chore[]){
+    public setChores(chores:Chore[]){
         this.chores = chores
     }
-    setStatus(status:boolean){
+    public setStatus(status:boolean){
        this.status = status;
     }
-    setTitle(title:string){
+    public setTitle(title:string){
         this.title = title;
     }
 
     //Getters:
-    getChores(){
+    public getChores(){
         return this.chores.slice();
     }
-    getStatus(){
+    public getStatus(){
        
         return this.status;
     }
-    getTitle(){
+    public getTitle(){
         return this.title;
     }
 
     //Other methods:
-    addChore(chore:Chore){
+    public addChore(chore:Chore){
   
         this.chores.push(chore);
     }
@@ -49,7 +48,7 @@ export class List {
     }
 
     getSortedChores() {
-        let chores = this.getChores()
+        let chores:Chore[] = this.getChores()
         chores.sort((a,b) => a.getPriority() > b.getPriority() ? 1 : -1)
         return chores;
     }

@@ -1,6 +1,8 @@
 "use strict";
 exports.__esModule = true;
 exports.notebook = exports.TaskManager = void 0;
+var list_1 = require("./list");
+var chore_1 = require("./chore");
 //use the revealing module pattern for this one
 exports.TaskManager = (function () {
     //Find out if a chore is due on a certain date:
@@ -76,13 +78,20 @@ exports.TaskManager = (function () {
             someDate.getMonth() == today.getMonth() &&
             someDate.getFullYear() == today.getFullYear();
     };
+    var isPast = function (someDate) {
+        var today = new Date();
+        return someDate.getDate() < (today.getDate()) &&
+            someDate.getMonth() <= today.getMonth() &&
+            someDate.getFullYear() <= today.getFullYear();
+    };
     return {
         getChoresDueToday: getChoresDueToday,
         getUnfinishedChores: getUnfinishedChores,
         getFinishedChores: getFinishedChores,
         removeCompleted: removeCompleted,
         isToday: isToday,
-        isTomorrow: isTomorrow
+        isTomorrow: isTomorrow,
+        isPast: isPast
     };
 })();
 exports.notebook = (function () {
@@ -98,7 +107,7 @@ exports.notebook = (function () {
     // }
     var addList = function (list) {
         lists.push(list);
-        localStorage.setItem("lists", lists.toString());
+        localStorage.setItem("lists", JSON.stringify({ lists: lists }));
     };
     var removeList = function (title) {
         lists.forEach(function (list, index) {
@@ -106,24 +115,47 @@ exports.notebook = (function () {
                 lists.splice(index, 1);
             }
         });
-        //localStorage.setItem("lists", lists)
+        localStorage.setItem("lists", JSON.stringify({ lists: lists }));
     };
     var getLists = function () {
         return lists;
     };
     var getActiveList = function () {
-        var listA;
-        lists.forEach(function (list) {
-            if (list.getStatus() === true) {
-                listA = list;
+        for (var i = 0; i < lists.length; i++) {
+            if (lists[i].getStatus() === true) {
+                return lists[i];
             }
+        }
+    };
+    var loadLists = function () {
+        lists = [];
+        var listJSON = JSON.parse(localStorage.getItem("lists"));
+        var loadedLists = listJSON.lists;
+        loadedLists.forEach(function (list) {
+            var newList = new list_1.List(list.title, list.status);
+            list.chores.forEach(function (chore) {
+                var newChore = new chore_1.Chore(chore.name, chore.description, chore.status, chore.priority, new Date(chore.dueDate));
+                newList.addChore(newChore);
+            });
+            lists.push(newList);
         });
-        return listA;
+    };
+    var addToActiveList = function (chore) {
+        for (var i = 0; i < lists.length; i++) {
+            if (lists[i].getStatus() === true) {
+                lists[i].addChore(chore);
+            }
+        }
+        localStorage.setItem("lists", JSON.stringify({ lists: lists }));
     };
     var owner = "Caleb";
-    return { addList: addList,
+    return {
+        loadLists: loadLists,
+        addList: addList,
         removeList: removeList,
         getLists: getLists,
         getActiveList: getActiveList,
-        owner: owner };
+        addToActiveList: addToActiveList,
+        owner: owner
+    };
 })();

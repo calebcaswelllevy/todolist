@@ -8,6 +8,7 @@ export const TaskManager = (() => {
 
    const due = (chore:Chore, date:Date) => {
     // if the days and months match:
+    
     if (chore.getDueDate().getMonth() === date.getMonth() && chore.getDueDate().getDate() === date.getDate()) {
         return true;
     }
@@ -79,17 +80,23 @@ export const TaskManager = (() => {
         } 
     }
     const isToday = (someDate:Date) => {
-        const today = new Date()
+        const today = new Date();
         return someDate.getDate() == today.getDate() &&
           someDate.getMonth() == today.getMonth() &&
-          someDate.getFullYear() == today.getFullYear()
+          someDate.getFullYear() == today.getFullYear();
       }
       const isTomorrow = (someDate:Date) => {
-        const today = new Date()
+        const today = new Date();
         return someDate.getDate() == (today.getDate() + 1) &&
           someDate.getMonth() == today.getMonth() &&
-          someDate.getFullYear() == today.getFullYear()
+          someDate.getFullYear() == today.getFullYear();
       }
+    const isPast = (someDate:Date) => {
+        const today = new Date();
+        return someDate.getDate() < (today.getDate()) &&
+        someDate.getMonth() <= today.getMonth() &&
+        someDate.getFullYear() <= today.getFullYear();
+    }
     return {
         getChoresDueToday,
         getUnfinishedChores,
@@ -97,6 +104,7 @@ export const TaskManager = (() => {
         removeCompleted,
         isToday,
         isTomorrow,
+        isPast,
     }
 })();
 
@@ -109,14 +117,14 @@ export const notebook = (()=>{
         })
     } else { */
         //initialize lists
-        const lists: List[] = [];
+        let lists: List[] = [];
    // }
        
     
     const addList = (list) => {
+    
         lists.push(list);
-        localStorage.setItem("lists", lists.toString());
-        
+        localStorage.setItem("lists", JSON.stringify({lists}));    
     }
     
     const removeList = (title) => {
@@ -126,28 +134,48 @@ export const notebook = (()=>{
             }
         })
         ;
-        //localStorage.setItem("lists", lists)
+        localStorage.setItem("lists", JSON.stringify({lists}));
     }
     const getLists = () => {
         return lists;
     }
     const getActiveList = () => {
       
-        let listA:List; 
-        lists.forEach(list => {
-           
-            if (list.getStatus() === true) {
-                
-                listA = list;
+        for (let i = 0; i<lists.length; i++) {
+            if (lists[i].getStatus() === true) {
+                return lists[i]
             }
-        })
-        return listA;
+        }
     }
-    let owner = "Caleb"
-    return {addList,
+    const loadLists = () => {
+        lists = []
+         let listJSON = JSON.parse(localStorage.getItem("lists"));
+         let loadedLists = listJSON.lists;
+         loadedLists.forEach(list => {
+            let newList = new List(list.title, list.status)
+            list.chores.forEach(chore => {
+                let newChore = new Chore(chore.name, chore.description, chore.status, chore.priority, new Date(chore.dueDate))
+                newList.addChore(newChore);
+            })
+            lists.push(newList);
+         })
+    }
+    const addToActiveList = (chore:Chore) => {
+        for (let i = 0; i<lists.length; i++) {
+            if (lists[i].getStatus() === true) {
+                lists[i].addChore(chore);
+            }
+        }
+        localStorage.setItem("lists",JSON.stringify({lists}));
+    }
+    let owner = "Caleb";
+    return {
+            loadLists,
+            addList,
            removeList,
             getLists,
             getActiveList,
+            addToActiveList,
             owner }
 })();
 
